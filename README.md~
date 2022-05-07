@@ -1,1 +1,12 @@
 # Group-Chat-App
+
+Install django channels
+python -m pip install -U channels
+
+Starting the redis server
+run command: redis-server
+
+User can enter a chat room of their choice for example 100
+For each room there are a numebr of users
+Each user has a unique channel name
+The user sends a message to a dynamic socket(ws/chat/100) and the socket sends the very message to all the other user
