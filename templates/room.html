@@ -23,9 +23,7 @@
             </h1>
 
             <div id="messagescontainer" style="overflow-y: auto; width: 40vw; height: 80vh; position: relative;" class="container">
-                <div id="lefttext">Hello !</div>
-                <br>
-                <div id="lefttext">Hello jkwebuirt jhwdvbfvhwe!</div>
+                <div id="lefttext">hi how are you!</div>
             </div>
 
             <div style="position: absolute; bottom: 20px; width: 100vw" class="d-flex justify-content-center">
@@ -35,3 +33,38 @@
         </div>
     </body>
 </html>
+
+{% comment %} use javascript to interact with backend {% endcomment %}
+
+<script type="text/javascript">
+    // window.location.host => dynamic domain
+    const chatSocket = new WebSocket('wss://'+location.host+'/ws/chat/{{room_no}}/')
+    //const chatSocket = new WebSocket('ws://127.0.0.1:8000/ws/chat/{{room_no}}>/')
+
+    // send message
+    document.querySelector('#sendbutton').onClick = function(e) {
+        const  message = document.querySelector('#messageinputfield').value // get typed mesage
+
+        chatSocket.send(JSON.stringify({'mesage':'{{name}}' + mesage})); // send message to socket
+
+        document.querySelector('#messageinputfield').value = ''; // clear textfield
+    }
+
+    document.querySelector('#messageinputfield').onkeyup = function(e) {
+        if(e.keyCode == 13) {
+            document.querySelector('#sendbutton').click();
+        }
+    }
+
+    // auto scroll down when screen in full and with incoming new message
+    function scrollToBottom() {
+        document.querySelector('#messagescontainer').scrollTo({top:document.querySelector('#messagescontainer').scrollHeight,behaviour : 'smooth'});
+    }
+
+    // receive message
+    chatSocket.onmessage = function(e) {
+        const data = JSON.parse(e.data);
+        document.querySelector('#messagescontainer').innerHTML += '<div id="lefttext">'+ data.message +'</div>'+'<br><br>';
+        scrollToBottom();
+    }
+</script>
