@@ -9,4 +9,8 @@ run command: redis-server
 User can enter a chat room of their choice for example 100
 For each room there are a numebr of users
 Each user has a unique channel name
-The user sends a message to a dynamic socket(ws/chat/100) and the socket sends the very message to all the other user
+The user sends a message to a dynamic socket(ws/chat/100) and the socket sends the very message to all the other users in the room
+
+Whenever a new user joins a room, a new socket is created
+Whenever a new socket is created, a new layer is created. If it is disconnected, the layer is deleted.
+Whenever a socket receives a new message, it sends it back to all layers
