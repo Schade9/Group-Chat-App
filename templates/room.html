@@ -23,7 +23,10 @@
             </h1>
 
             <div id="messagescontainer" style="overflow-y: auto; width: 40vw; height: 80vh; position: relative;" class="container">
-                <div id="lefttext">hi how are you!</div>
+                {% for message in messages %}
+                    <div id="lefttext">{{message}}</div>
+                    <br>
+                {% endfor%}
             </div>
 
             <div style="position: absolute; bottom: 20px; width: 100vw" class="d-flex justify-content-center">
@@ -31,7 +34,7 @@
                 <input id="sendbutton" class="btn btn-primary" type="submit" name="" value="send">
             </div>
         </div>
-    </body>
+    </body> 
 </html>
 
 {% comment %} use javascript to interact with backend {% endcomment %}
